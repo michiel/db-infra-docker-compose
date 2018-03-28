@@ -1,0 +1,40 @@
+version: '2'
+services:
+
+  postgres:
+    build: ./postgres
+    cap_drop:
+      - ALL
+    cap_add:
+      - FOWNER
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+      - CHOWN
+    ports:
+      - "5432:5432"
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123123
+      PGDATA: /srv/pgdata
+    volumes:
+      - /srv/docker/postgresql/data:/srv/pgdata
+
+  mysql:
+    build: ./mysql
+    cap_drop:
+      - ALL
+    cap_add:
+      - FOWNER
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+      - CHOWN
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123
+    volumes:
+      - /srv/docker/mysql:/var/lib/mysql
+
